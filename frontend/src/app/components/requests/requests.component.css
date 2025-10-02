@@ -1,0 +1,178 @@
+.requests-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  font-size: 24px;
+  color: #2c3e50;
+  margin: 10px 0;
+  font-family: monospace;
+}
+
+.link-status {
+  margin-top: 5px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.requests-list,
+.request-details {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.requests-list h3,
+.request-details h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+.request-item {
+  padding: 15px;
+  border: 1px solid #ecf0f1;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.request-item:hover {
+  border-color: #3498db;
+  background: #f8f9fa;
+}
+
+.request-item.selected {
+  border-color: #3498db;
+  background: #e3f2fd;
+}
+
+.request-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.method-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.method-badge.large {
+  font-size: 16px;
+  padding: 8px 16px;
+}
+
+.method-get {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.method-post {
+  background: #d4edda;
+  color: #155724;
+}
+
+.method-put {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.method-delete {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.method-patch {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.method-other {
+  background: #d6d8db;
+  color: #1b1e21;
+}
+
+.timestamp {
+  font-size: 13px;
+  color: #7f8c8d;
+}
+
+.request-info {
+  font-size: 13px;
+  color: #95a5a6;
+}
+
+.ip {
+  font-family: monospace;
+}
+
+.details-content {
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+}
+
+.detail-section {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.detail-section:last-child {
+  border-bottom: none;
+}
+
+.detail-section h4 {
+  font-size: 14px;
+  color: #7f8c8d;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.detail-section p {
+  color: #2c3e50;
+  word-break: break-all;
+}
+
+.detail-section pre {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .request-details {
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  .header-actions {
+    flex-wrap: wrap;
+  }
+}

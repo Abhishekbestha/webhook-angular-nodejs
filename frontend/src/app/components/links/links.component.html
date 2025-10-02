@@ -1,0 +1,58 @@
+<div class="links-container">
+  <div class="card">
+    <div class="header">
+      <h2>Your Webhook Links</h2>
+      <button class="btn btn-primary" (click)="createLink()" [disabled]="loading">
+        {{ loading ? 'Creating...' : '+ Create New Link' }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading && links.length === 0" class="loading">
+    Loading...
+  </div>
+
+  <div *ngIf="!loading && links.length === 0" class="empty-state">
+    <h3>No webhook links yet</h3>
+    <p>Click "Create New Link" to generate your first webhook link</p>
+  </div>
+
+  <div *ngFor="let link of links" class="card link-card">
+    <div class="link-header">
+      <div class="link-info">
+        <h3>{{ link.linkId }}</h3>
+        <span class="badge" [ngClass]="isExpired(link.expiresAt) ? 'badge-danger' : 'badge-success'">
+          {{ isExpired(link.expiresAt) ? 'Expired' : getDaysRemaining(link.expiresAt) + ' days remaining' }}
+        </span>
+      </div>
+      <div class="link-actions">
+        <button class="btn btn-secondary" (click)="viewRequests(link.linkId)">
+          View Requests
+        </button>
+        <button class="btn btn-danger" (click)="deleteLink(link.linkId)">
+          Delete
+        </button>
+      </div>
+    </div>
+
+    <div class="webhook-url">
+      <label>Webhook URL:</label>
+      <div class="url-container">
+        <input
+          type="text"
+          [value]="getWebhookUrl(link.linkId)"
+          readonly
+          (click)="$event.target.select()"
+        >
+        <button class="btn btn-primary" (click)="copyToClipboard(link.linkId)">
+          {{ copiedLinkId === link.linkId ? 'Copied!' : 'Copy' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="link-meta">
+      <span>Created: {{ link.createdAt | date:'short' }}</span>
+      <span>Expires: {{ link.expiresAt | date:'short' }}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="requests-container">
+  <div class="card">
+    <div class="header">
+      <div>
+        <button class="btn btn-secondary" (click)="goBack()">← Back to Links</button>
+        <h2>Requests for {{ linkId }}</h2>
+        <p *ngIf="link" class="link-status">
+          <span class="badge" [ngClass]="new Date(link.expiresAt) > new Date() ? 'badge-success' : 'badge-danger'">
+            {{ new Date(link.expiresAt) > new Date() ? 'Active' : 'Expired' }}
+          </span>
+        </p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary" (click)="toggleAutoRefresh()">
+          {{ autoRefresh ? '⏸ Pause' : '▶ Resume' }} Auto-refresh
+        </button>
+        <button class="btn btn-primary" (click)="loadRequests()" [disabled]="loading">
+          {{ loading ? 'Refreshing...' : '🔄 Refresh' }}
+        </button>
+        <button class="btn btn-danger" (click)="clearRequests()" [disabled]="requests.length === 0">
+          🗑 Clear All
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <div class="requests-list">
+      <h3>Incoming Requests ({{ requests.length }})</h3>
+
+      <div *ngIf="loading && requests.length === 0" class="loading">
+        Loading...
+      </div>
+
+      <div *ngIf="!loading && requests.length === 0" class="empty-state">
+        <h4>No requests yet</h4>
+        <p>Send a request to your webhook URL to see it here</p>
+      </div>
+
+      <div
+        *ngFor="let request of requests"
+        class="request-item"
+        [class.selected]="selectedRequest?.id === request.id"
+        (click)="selectRequest(request)"
+      >
+        <div class="request-header">
+          <span class="method-badge" [ngClass]="getMethodClass(request.method)">
+            {{ request.method }}
+          </span>
+          <span class="timestamp">{{ request.timestamp | date:'short' }}</span>
+        </div>
+        <div class="request-info">
+          <span *ngIf="request.ipAddress" class="ip">{{ request.ipAddress }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="request-details">
+      <h3>Request Details</h3>
+
+      <div *ngIf="!selectedRequest" class="empty-state">
+        <p>Select a request to view details</p>
+      </div>
+
+      <div *ngIf="selectedRequest" class="details-content">
+        <div class="detail-section">
+          <h4>Method</h4>
+          <span class="method-badge large" [ngClass]="getMethodClass(selectedRequest.method)">
+            {{ selectedRequest.method }}
+          </span>
+        </div>
+
+        <div class="detail-section">
+          <h4>Timestamp</h4>
+          <p>{{ selectedRequest.timestamp | date:'full' }}</p>
+        </div>
+
+        <div class="detail-section" *ngIf="selectedRequest.ipAddress">
+          <h4>IP Address</h4>
+          <p>{{ selectedRequest.ipAddress }}</p>
+        </div>
+
+        <div class="detail-section" *ngIf="Object.keys(selectedRequest.query).length > 0">
+          <h4>Query Parameters</h4>
+          <pre>{{ formatJson(selectedRequest.query) }}</pre>
+        </div>
+
+        <div class="detail-section">
+          <h4>Headers</h4>
+          <pre>{{ formatJson(selectedRequest.headers) }}</pre>
+        </div>
+
+        <div class="detail-section" *ngIf="selectedRequest.body">
+          <h4>Body</h4>
+          <pre>{{ formatJson(selectedRequest.body) }}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

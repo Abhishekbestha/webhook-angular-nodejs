@@ -3,9 +3,10 @@
     <div class="header">
       <div>
         <button class="btn btn-secondary" (click)="goBack()">← Back to Links</button>
-        <h2>Requests for {{ linkId }}</h2>
+        <h2>📡 Requests for {{ linkId }}</h2>
         <p *ngIf="link" class="link-status">
           <span class="badge" [ngClass]="isLinkActive(link.expiresAt) ? 'badge-success' : 'badge-danger'">
+            <span class="status-dot" [ngClass]="isLinkActive(link.expiresAt) ? 'active' : 'inactive'"></span>
             {{ isLinkActive(link.expiresAt) ? 'Active' : 'Expired' }}
           </span>
         </p>

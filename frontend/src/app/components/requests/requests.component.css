@@ -311,3 +311,21 @@
   background: var(--danger);
   box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
 }
+
+/* Status dot in badge */
+.status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.status-dot.active {
+  background: #34d399;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.status-dot.inactive {
+  background: #f87171;
+}

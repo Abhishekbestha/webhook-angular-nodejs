@@ -1,35 +1,41 @@
 # Webhook Manager
 
-A full-stack webhook management application with a 3-tier architecture built with Node.js, Angular, and designed for deployment on Vercel.
+A modern full-stack webhook management application with separate backend and frontend deployments. Built with Node.js, Angular, and designed for independent deployment.
 
 ## Features
 
-- **Generate Unique Webhook Links**: Create multiple webhook endpoints with unique IDs
-- **30-Day Validity**: Each link automatically expires after 30 days
-- **Request Monitoring**: View all incoming webhook requests in real-time
-- **Auto-Refresh**: Automatically refresh requests every 5 seconds
-- **Request Details**: Inspect headers, body, query parameters, and metadata
-- **Multiple Links**: Create and manage multiple webhook links simultaneously
-- **Clean UI**: Modern, responsive interface built with Angular
+- 🪝 **Generate Unique Webhook Links**: Create multiple webhook endpoints with unique IDs
+- ⏰ **30-Day Validity**: Each link automatically expires after 30 days
+- 📊 **Request Monitoring**: View all incoming webhook requests in real-time
+- 🔄 **Auto-Refresh**: Automatically refresh requests every 5 seconds
+- 🔍 **Request Details**: Inspect headers, body, query parameters, and metadata
+- 📱 **Multiple Links**: Create and manage multiple webhook links simultaneously
+- 🎨 **Professional UI**: Modern, dark-themed responsive interface with Inter font
+- 🌐 **Dynamic Configuration**: Configure API URL at runtime without rebuilding
 
 ## Architecture
+
+This project is structured as **two independent applications** that can be deployed separately:
 
 ### Backend (Node.js + Express)
 - RESTful API for managing webhook links and requests
 - In-memory storage (can be easily replaced with a database)
 - CORS enabled for cross-origin requests
 - TypeScript for type safety
+- Standalone deployment ready
 
 ### Frontend (Angular 17)
 - Standalone components architecture
 - Reactive UI with RxJS
 - Auto-refresh functionality
 - Responsive design
+- Dynamic API URL configuration
+- Modern dark theme with professional styling
 
-### Deployment (Vercel)
-- Monorepo setup
-- Automatic builds via GitHub integration
-- Environment configuration
+### Deployment
+- **Separate Deployments**: Deploy backend and frontend independently
+- **Any Platform**: Deploy to Vercel, Heroku, Render, AWS, etc.
+- **Runtime Configuration**: Change API URL without rebuilding frontend
 
 ## Project Structure
 
@@ -58,7 +64,7 @@ webhook-angular-nodejs/
 └── README.md
 ```
 
-## Getting Started
+## Quick Start
 
 ### Prerequisites
 
@@ -66,59 +72,62 @@ webhook-angular-nodejs/
 - npm or yarn
 - Git
 
-### Installation
+### Development Setup
 
-1. Clone the repository:
+#### Backend
+
+1. Navigate to backend:
 ```bash
-git clone <your-repo-url>
-cd webhook-angular-nodejs
+cd backend
+npm install
 ```
 
-2. Install dependencies:
+2. Create environment file:
 ```bash
-# Install all dependencies
-npm run install:all
-
-# Or install separately
-npm run install:backend
-npm run install:frontend
-```
-
-3. Create environment files:
-```bash
-# Backend
-cp backend/.env.example backend/.env
-
-# Root
 cp .env.example .env
 ```
 
-### Development
-
-Run both frontend and backend in development mode:
-
-**Backend** (Terminal 1):
+3. Start development server:
 ```bash
-npm run dev:backend
+npm run dev
 ```
 Backend runs on http://localhost:3000
 
-**Frontend** (Terminal 2):
+#### Frontend
+
+1. Navigate to frontend:
 ```bash
-npm run dev:frontend
+cd frontend
+npm install
+```
+
+2. Start development server:
+```bash
+npm start
 ```
 Frontend runs on http://localhost:4200
 
-### Building for Production
+The frontend will automatically connect to `http://localhost:3000/api` in development.
 
-```bash
-# Build both backend and frontend
-npm run vercel-build
+### Production Deployment
 
-# Or build separately
-npm run build:backend
-npm run build:frontend
-```
+See the comprehensive [Deployment Guide](./DEPLOYMENT_GUIDE.md) for detailed instructions on deploying to various platforms.
+
+#### Quick Deploy Steps
+
+1. **Deploy Backend** (choose one):
+   - Vercel: `cd backend && vercel --prod`
+   - Heroku: `heroku create && git push heroku main`
+   - Render: Connect repo and set root directory to `backend`
+
+2. **Configure Frontend API URL**:
+   - After building, edit `dist/webhook-frontend/env.js`
+   - Set `window.__env.apiUrl` to your backend URL
+
+3. **Deploy Frontend** (choose one):
+   - Vercel: `cd frontend && vercel --prod`
+   - Netlify: `npm run build && netlify deploy --dir=dist/webhook-frontend`
+   - Any static host: Upload `dist/webhook-frontend` contents
 
 ## API Endpoints
 
@@ -139,40 +148,33 @@ npm run build:frontend
 
 - `GET /api/health` - Server health check
 
-## Deployment on Vercel
+## Dynamic API Configuration
 
-### Via GitHub Integration (Recommended)
+The frontend supports runtime API URL configuration without rebuilding:
 
-1. Push your code to GitHub:
-```bash
-git add .
-git commit -m "Initial commit"
-git push origin main
+### How It Works
+
+1. The frontend loads `env.js` on startup
+2. `env.js` sets `window.__env.apiUrl`
+3. Angular reads this value in `environment.ts`
+
+### Changing API URL
+
+Edit `frontend/dist/webhook-frontend/env.js` after building:
+
+```javascript
+(function(window) {
+  window.__env = window.__env || {};
+  window.__env.apiUrl = 'https://your-backend-url.com/api';
+}(this));
 ```
 
-2. Go to [Vercel Dashboard](https://vercel.com)
-3. Click "New Project"
-4. Import your GitHub repository
-5. Vercel will auto-detect the configuration from `vercel.json`
-6. Click "Deploy"
+### Benefits
 
-### Via Vercel CLI
-
-1. Install Vercel CLI:
-```bash
-npm i -g vercel
-```
-
-2. Deploy:
-```bash
-vercel
-```
-
-3. Follow the prompts to link to your project
-
-### Environment Variables (Vercel)
-
-No additional environment variables are required for basic functionality. The app uses relative API URLs in production.
+- ✅ No rebuild required
+- ✅ Same build for multiple environments
+- ✅ Configure at deployment time
+- ✅ Easy environment switching
 
 ## Usage
 
@@ -239,7 +241,7 @@ this.refreshSubscription = interval(5000).subscribe(() => {
 ## Technologies Used
 
 ### Backend
-- Node.js
+- Node.js 18+
 - Express.js
 - TypeScript
 - UUID for unique ID generation
@@ -249,38 +251,60 @@ this.refreshSubscription = interval(5000).subscribe(() => {
 - Angular 17 (Standalone Components)
 - RxJS
 - TypeScript
-- CSS3
+- CSS3 with modern dark theme
+- Inter font family
+- Dynamic runtime configuration
 
-### DevOps
-- Vercel for deployment
-- GitHub for version control
+### UI/UX
+- Professional dark theme
+- Gradient effects and animations
+- Responsive design
+- Modern iconography
+- Smooth transitions
 
 ## Troubleshooting
 
 ### Port Already in Use
 
-If port 3000 or 4200 is already in use:
-
 **Backend**: Edit `backend/.env`:
-```
+```env
 PORT=3001
 ```
 
-**Frontend**: Edit `frontend/src/environments/environment.ts`:
-```typescript
-apiUrl: 'http://localhost:3001/api'
+**Frontend**: Edit `frontend/src/env.js`:
+```javascript
+window.__env.apiUrl = 'http://localhost:3001/api';
 ```
 
 ### CORS Issues
 
-Make sure the backend CORS is properly configured in `backend/src/index.ts`
+Ensure backend CORS configuration in `backend/src/index.ts` includes your frontend URL:
+```typescript
+app.use(cors({
+  origin: ['http://localhost:4200', 'https://yourfrontend.com']
+}));
+```
+
+### API Connection Failed
+
+1. Verify backend is running and accessible
+2. Check `env.js` has correct API URL
+3. Open browser DevTools → Network tab to inspect failed requests
+4. Ensure CORS headers are present in response
 
 ### Build Errors
 
 Clear node_modules and reinstall:
 ```bash
-rm -rf node_modules backend/node_modules frontend/node_modules
-npm run install:all
+# Backend
+cd backend
+rm -rf node_modules
+npm install
+
+# Frontend
+cd frontend
+rm -rf node_modules .angular
+npm install
 ```
 
 ## Future Enhancements
@@ -308,6 +332,16 @@ MIT License
 4. Push to the branch
 5. Open a Pull Request
 
+## Documentation
+
+- [Backend README](./backend/README.md) - Backend API documentation
+- [Frontend README](./frontend/README.md) - Frontend setup and configuration
+- [Deployment Guide](./DEPLOYMENT_GUIDE.md) - Comprehensive deployment instructions
+
 ## Support
 
 For issues and questions, please open an issue on GitHub.
+
+---
+
+**Built with ❤️ using Node.js, Angular, and TypeScript**

@@ -1,9 +1,12 @@
 <div class="links-container">
   <div class="card">
     <div class="header">
-      <h2>Your Webhook Links</h2>
+      <div>
+        <h2>Your Webhook Links</h2>
+        <p class="subtitle">Create and manage temporary webhook endpoints</p>
+      </div>
       <button class="btn btn-primary" (click)="createLink()" [disabled]="loading">
-        {{ loading ? 'Creating...' : '+ Create New Link' }}
+        <span>{{ loading ? 'Creating...' : '✨ Create New Link' }}</span>
       </button>
     </div>
   </div>
@@ -27,10 +30,10 @@
       </div>
       <div class="link-actions">
         <button class="btn btn-secondary" (click)="viewRequests(link.linkId)">
-          View Requests
+          📊 View Requests
         </button>
         <button class="btn btn-danger" (click)="deleteLink(link.linkId)">
-          Delete
+          🗑 Delete
         </button>
       </div>
     </div>
@@ -46,7 +49,7 @@
           (click)="urlInput.select()"
         >
         <button class="btn btn-primary" (click)="copyToClipboard(link.linkId)">
-          {{ copiedLinkId === link.linkId ? 'Copied!' : 'Copy' }}
+          {{ copiedLinkId === link.linkId ? '✓ Copied!' : '📋 Copy' }}
         </button>
       </div>
     </div>

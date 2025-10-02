@@ -13,7 +13,7 @@
   // - Heroku: 'https://your-app.herokuapp.com/api'
   // - Custom domain: 'https://api.yourdomain.com/api'
 
-  window.__env.apiUrl = 'YOUR_BACKEND_URL_HERE/api';
+  window.__env.apiUrl = 'https://webhook-angular-nodejs.vercel.app/api';
 
   // Example configurations:
   // window.__env.apiUrl = 'https://webhook-backend.vercel.app/api';

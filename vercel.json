@@ -1,37 +1,20 @@
 {
   "version": 2,
-  "builds": [
+  "buildCommand": "npm run vercel-build",
+  "installCommand": "npm run install:all",
+  "rewrites": [
     {
-      "src": "backend/package.json",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["backend/dist/**"]
-      }
+      "source": "/api/(.*)",
+      "destination": "/api"
     },
     {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "frontend/dist/webhook-frontend"
-      }
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "backend/dist/index.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "frontend/dist/webhook-frontend/$1"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "build": {
-    "env": {
-      "NODE_ENV": "production"
+  "functions": {
+    "api/index.js": {
+      "runtime": "nodejs20.x"
     }
   }
 }

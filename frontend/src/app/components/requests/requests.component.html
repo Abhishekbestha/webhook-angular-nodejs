@@ -5,8 +5,8 @@
         <button class="btn btn-secondary" (click)="goBack()">← Back to Links</button>
         <h2>Requests for {{ linkId }}</h2>
         <p *ngIf="link" class="link-status">
-          <span class="badge" [ngClass]="new Date(link.expiresAt) > new Date() ? 'badge-success' : 'badge-danger'">
-            {{ new Date(link.expiresAt) > new Date() ? 'Active' : 'Expired' }}
+          <span class="badge" [ngClass]="isLinkActive(link.expiresAt) ? 'badge-success' : 'badge-danger'">
+            {{ isLinkActive(link.expiresAt) ? 'Active' : 'Expired' }}
           </span>
         </p>
       </div>
@@ -80,7 +80,7 @@
           <p>{{ selectedRequest.ipAddress }}</p>
         </div>
 
-        <div class="detail-section" *ngIf="Object.keys(selectedRequest.query).length > 0">
+        <div class="detail-section" *ngIf="hasQueryParams(selectedRequest.query)">
           <h4>Query Parameters</h4>
           <pre>{{ formatJson(selectedRequest.query) }}</pre>
         </div>

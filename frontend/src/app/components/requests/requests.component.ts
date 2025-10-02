@@ -124,4 +124,16 @@ export class RequestsComponent implements OnInit, OnDestroy {
     };
     return classes[method] || 'method-other';
   }
+
+  isLinkExpired(expiresAt: string): boolean {
+    return new Date(expiresAt) < new Date();
+  }
+
+  isLinkActive(expiresAt: string): boolean {
+    return new Date(expiresAt) > new Date();
+  }
+
+  hasQueryParams(query: Record<string, string>): boolean {
+    return Object.keys(query).length > 0;
+  }
 }
